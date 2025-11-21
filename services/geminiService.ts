@@ -2,10 +2,13 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Criteria, Song } from "../types";
 
 const createClient = () => {
-  if (!process.env.API_KEY) {
+  // Use process.env.API_KEY exclusively as per guidelines
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
     throw new Error("API_KEY environment variable is missing.");
   }
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  return new GoogleGenAI({ apiKey: apiKey });
 };
 
 export const generateSongRecommendations = async (criteria: Criteria): Promise<Song[]> => {
