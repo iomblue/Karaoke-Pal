@@ -1,0 +1,21 @@
+{
+  "short_name": "Karaoke Pal",
+  "name": "Karaoke Pal AI Assistant",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/0f0f1a/bf00ff?text=KP",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://placehold.co/512x512/0f0f1a/bf00ff?text=KP",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0f0f1a",
+  "background_color": "#0f0f1a",
+  "orientation": "portrait"
+}
