@@ -2,8 +2,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Criteria, Song } from "../types";
 
 const createClient = () => {
-  // Use process.env.API_KEY exclusively as per guidelines
-  const apiKey = process.env.API_KEY;
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
   
   if (!apiKey) {
     throw new Error("API_KEY environment variable is missing.");
