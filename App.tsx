@@ -272,10 +272,15 @@ const App: React.FC = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-neon-surface/30 p-4 rounded-xl border border-white/10 backdrop-blur-sm">
                   <div className="text-center md:text-left">
                     <h2 className="text-lg md:text-xl font-bold text-white">Suggestions</h2>
-                    <p className="text-gray-400 text-xs mt-1">
-                      Criteria: <span className="text-neon-blue">{lastCriteria?.mood}</span> • <span className="text-neon-pink">{lastCriteria?.decade}</span> • <span className="text-purple-400">{lastCriteria?.genre}</span>
-                      {lastCriteria?.customRequest && <span className="text-yellow-400 block mt-1">Req: "{lastCriteria.customRequest}"</span>}
-                    </p>
+                    {lastCriteria?.customRequest ? (
+                      <p className="text-gray-300 text-xs mt-1">
+                        Special request search (ignoring filters): <span className="text-yellow-300">"{lastCriteria.customRequest}"</span>
+                      </p>
+                    ) : (
+                      <p className="text-gray-400 text-xs mt-1">
+                        Criteria: <span className="text-neon-blue">{lastCriteria?.mood}</span> • <span className="text-neon-pink">{lastCriteria?.decade}</span> • <span className="text-purple-400">{lastCriteria?.genre}</span>
+                      </p>
+                    )}
                   </div>
                   <button 
                     onClick={handleReset}

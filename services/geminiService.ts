@@ -30,32 +30,47 @@ const createClient = () => {
 export const generateSongRecommendations = async (criteria: Criteria): Promise<Song[]> => {
   const ai = createClient();
 
-  const customInstruction = criteria.customRequest 
-    ? `IMPORTANT - USER SPECIAL REQUEST: "${criteria.customRequest}". Prioritize this request over other criteria if necessary.` 
-    : "";
+  const customRequest = criteria.customRequest?.trim();
+  const isDirectSearch = Boolean(customRequest);
 
-  // MODIFIED: Reduced count to 12 and requested shorter lyrics to ensure high success rate.
-  const prompt = `
-    Act as an expert Karaoke DJ with deep knowledge of Spotify trends and music history.
-    I need a curated list of 12 karaoke songs that match the following criteria:
-    - Vocal Preference: ${criteria.vocalType}
-    - Decade/Era: ${criteria.decade}
-    - Genre: ${criteria.genre}
-    - Mood/Atmosphere: ${criteria.mood}
-    - Difficulty Level: ${criteria.difficulty}
-    ${customInstruction}
+  // Build prompt: if special request is present, treat it as a direct artist/song query and ignore other filters
+  const prompt = isDirectSearch
+    ? `
+      Act as an expert Karaoke DJ. Find 12 karaoke-ready songs that match this special request ONLY:
+      - Request: "${customRequest}"
+      Ignore any other filters (genre/decade/mood/difficulty/vocal type).
 
-    For each song, provide:
-    1. Title
-    2. Artist
-    3. Release Year
-    4. Genre
-    5. A very short, iconic lyric snippet (1-2 lines maximum). If the lyrics are copyrighted or blocked, provide a brief description of the hook instead.
-    6. Difficulty rating (Easy, Medium, or Hard).
-    7. A very brief description of the mood (e.g., "High energy party anthem").
+      For each song, provide:
+      1. Title
+      2. Artist
+      3. Release Year
+      4. Genre
+      5. A very short, iconic lyric snippet (1-2 lines max) or a brief hook description if lyrics are blocked.
+      6. Difficulty rating (Easy, Medium, or Hard).
+      7. A very brief description of the mood (e.g., "High energy party anthem").
 
-    Ensure the songs are popular enough that a standard karaoke machine would have them.
-  `;
+      Only return songs that match the artist/title/keyword request above. Prefer well-known tracks that appear on typical karaoke catalogs.
+    `
+    : `
+      Act as an expert Karaoke DJ with deep knowledge of Spotify trends and music history.
+      I need a curated list of 12 karaoke songs that match the following criteria:
+      - Vocal Preference: ${criteria.vocalType}
+      - Decade/Era: ${criteria.decade}
+      - Genre: ${criteria.genre}
+      - Mood/Atmosphere: ${criteria.mood}
+      - Difficulty Level: ${criteria.difficulty}
+
+      For each song, provide:
+      1. Title
+      2. Artist
+      3. Release Year
+      4. Genre
+      5. A very short, iconic lyric snippet (1-2 lines maximum). If the lyrics are copyrighted or blocked, provide a brief description of the hook instead.
+      6. Difficulty rating (Easy, Medium, or Hard).
+      7. A very brief description of the mood (e.g., "High energy party anthem").
+
+      Ensure the songs are popular enough that a standard karaoke machine would have them.
+    `;
 
   try {
     const response = await ai.models.generateContent({

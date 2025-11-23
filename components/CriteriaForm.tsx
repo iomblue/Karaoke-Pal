@@ -104,15 +104,18 @@ const CriteriaForm: React.FC<CriteriaFormProps> = ({ onSubmit, isGenerating }) =
         {/* Custom Request Input */}
         <div className="space-y-2">
           <label className="text-yellow-400 font-semibold tracking-wide uppercase text-sm">
-            Special Request <span className="text-gray-500 text-xs normal-case">(Optional)</span>
+            Special Request (Artist or Song) <span className="text-gray-500 text-xs normal-case">(Optional)</span>
           </label>
           <input
             type="text"
             value={customRequest}
             onChange={(e) => setCustomRequest(e.target.value)}
-            placeholder='e.g. "Disney songs", "Breakup anthems", "Songs with key changes"'
+            placeholder='e.g. "Take That", "Adele", or a specific song title'
             className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors"
           />
+          <p className="text-xs text-gray-400">
+            If filled, this will search by artist or song and ignore the other filters above.
+          </p>
         </div>
 
         <div className="pt-4">
