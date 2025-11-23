@@ -23,7 +23,8 @@ const SongCard: React.FC<SongCardProps> = ({ song, index, onSelect, isFavorite, 
     return Math.abs(hash);
   };
 
-  const seed = generateHash(`${song.title}-${song.artist}`);
+  // Include index to reduce collisions when titles/artists repeat
+  const seed = generateHash(`${song.title}-${song.artist}-${index}`);
   const imageUrl = `https://loremflickr.com/400/400/music,concert,neon,singer/all?lock=${seed}`;
   
   const getDifficultyColor = (diff: string) => {
