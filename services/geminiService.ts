@@ -1,13 +1,24 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Criteria, Song } from "../types";
 
-const createClient = () => {
-  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-  
+const resolveApiKey = () => {
+  // Support both Vite-style env (import.meta.env) and process.env fallbacks
+  const apiKey =
+    (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_API_KEY) ||
+    (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
+    process.env.API_KEY ||
+    process.env.GEMINI_API_KEY;
+
   if (!apiKey) {
     throw new Error("API_KEY environment variable is missing.");
   }
-  return new GoogleGenAI({ apiKey: apiKey });
+
+  return apiKey;
+};
+
+const createClient = () => {
+  const apiKey = resolveApiKey();
+  return new GoogleGenAI({ apiKey });
 };
 
 export const generateSongRecommendations = async (criteria: Criteria): Promise<Song[]> => {
@@ -65,8 +76,15 @@ export const generateSongRecommendations = async (criteria: Criteria): Promise<S
       }
     });
 
-    // Helper to check for text existence
-    const text = response.text;
+    // Normalize text extraction across SDK variants
+    let text =
+      typeof response.text === "function"
+        ? await response.text()
+        : response.text;
+
+    if (!text && response.response && typeof response.response.text === "function") {
+      text = await response.response.text();
+    }
 
     if (text) {
       try {
