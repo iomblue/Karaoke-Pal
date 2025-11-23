@@ -13,6 +13,10 @@ const resolveApiKey = () => {
     throw new Error("API_KEY environment variable is missing.");
   }
 
+  if (typeof window !== "undefined") {
+    (window as any).__GEMINI_KEY_PRESENT__ = true;
+  }
+
   return apiKey;
 };
 
@@ -106,8 +110,13 @@ export const generateSongRecommendations = async (criteria: Criteria): Promise<S
     }
 
     throw new Error("No data returned from Gemini (Empty Response)");
-  } catch (error) {
+  } catch (error: any) {
+    const message =
+      error?.message ||
+      error?.error?.message ||
+      (typeof error === "string" ? error : "Error fetching songs");
+
     console.error("Error fetching songs:", error);
-    throw error;
+    throw new Error(message);
   }
 };

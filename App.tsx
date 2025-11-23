@@ -104,8 +104,10 @@ const App: React.FC = () => {
       setSongs(recommendations);
       setAppState(AppState.RESULTS);
     } catch (err) {
-      console.error(err);
-      setError("Failed to generate songs. Please verify your API key or try again.");
+      console.error("Song generation failed:", err);
+      const message =
+        err instanceof Error ? err.message : typeof err === "string" ? err : "Unknown error";
+      setError(`Failed to generate songs: ${message}`);
       setAppState(AppState.ERROR);
     }
   };
