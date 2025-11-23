@@ -232,7 +232,7 @@ const App: React.FC = () => {
              )}
 
              <div className="mb-8 text-center space-y-2">
-               <h2 className="text-2xl font-bold text-white">Setup Your Session</h2>
+               <h2 className="text-2xl font-bold text-white">AI Powered Song Picker</h2>
                <p className="text-gray-400 text-sm">Tell us what you want to sing, and we'll handle the playlist.</p>
              </div>
              <CriteriaForm onSubmit={handleCriteriaSubmit} isGenerating={false} />
