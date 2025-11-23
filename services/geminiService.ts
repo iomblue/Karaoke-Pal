@@ -77,14 +77,13 @@ export const generateSongRecommendations = async (criteria: Criteria): Promise<S
     });
 
     // Normalize text extraction across SDK variants
-    let text =
-      typeof response.text === "function"
-        ? await response.text()
-        : response.text;
-
-    if (!text && response.response && typeof response.response.text === "function") {
-      text = await response.response.text();
-    }
+    // Handle both property and candidate text shapes
+    const text =
+      response.text ??
+      response.candidates?.[0]?.content?.parts
+        ?.map((part: any) => part.text)
+        .filter(Boolean)
+        .join("\n");
 
     if (text) {
       try {
