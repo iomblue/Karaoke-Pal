@@ -7,6 +7,20 @@ import LyricModal from './components/LyricModal';
 import { AppState, Criteria, Song } from './types';
 import { generateSongRecommendations } from './services/geminiService';
 
+// Expose env info for easy debugging in the browser console
+if (typeof window !== 'undefined') {
+  // Print once at startup so we can confirm Vite loaded the env file
+  // Note: the values are injected at build/dev time by Vite
+  // eslint-disable-next-line no-console
+  console.log('ENV DEBUG', import.meta.env);
+
+  (window as any).__ENV__ = {
+    VITE_API_KEY: import.meta.env.VITE_API_KEY,
+    API_KEY: import.meta.env.API_KEY,
+    GEMINI_API_KEY: import.meta.env.GEMINI_API_KEY,
+  };
+}
+
 type Tab = 'SEARCH' | 'SETLIST' | 'HISTORY';
 
 const App: React.FC = () => {

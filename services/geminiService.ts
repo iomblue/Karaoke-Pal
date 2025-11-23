@@ -3,9 +3,11 @@ import { Criteria, Song } from "../types";
 
 const resolveApiKey = () => {
   // Support both Vite-style env (import.meta.env) and process.env fallbacks
+  const env = (typeof import.meta !== "undefined" ? (import.meta as any).env : {}) || {};
   const apiKey =
-    (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_API_KEY) ||
-    (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
+    env.VITE_API_KEY ||
+    env.API_KEY ||
+    env.GEMINI_API_KEY ||
     process.env.API_KEY ||
     process.env.GEMINI_API_KEY;
 
