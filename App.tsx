@@ -12,12 +12,13 @@ if (typeof window !== 'undefined') {
   // Print once at startup so we can confirm Vite loaded the env file
   // Note: the values are injected at build/dev time by Vite
   // eslint-disable-next-line no-console
-  console.log('ENV DEBUG', import.meta.env);
+  const env = (import.meta as any).env || {};
+  console.log('ENV DEBUG', env);
 
   (window as any).__ENV__ = {
-    VITE_API_KEY: import.meta.env.VITE_API_KEY,
-    API_KEY: import.meta.env.API_KEY,
-    GEMINI_API_KEY: import.meta.env.GEMINI_API_KEY,
+    VITE_API_KEY: env.VITE_API_KEY,
+    API_KEY: env.API_KEY,
+    GEMINI_API_KEY: env.GEMINI_API_KEY,
   };
 }
 
