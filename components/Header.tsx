@@ -28,9 +28,8 @@ const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 w-full py-3 md:py-6 px-4 flex flex-col items-center justify-center text-center bg-[#0f0f1a]/90 backdrop-blur-md border-b border-neon-purple/20 shadow-lg transition-all duration-300 relative">
 
-      {/* Action Buttons */}
-      <div className="absolute right-4 top-3 md:top-6 flex gap-2">
-        {/* QR Code Button */}
+      {/* Left Actions: QR Code */}
+      <div className="absolute left-4 top-3 md:top-6">
         <button
           onClick={() => setShowQRModal(true)}
           className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-neon-pink active:scale-95"
@@ -40,8 +39,10 @@ const Header: React.FC = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4h2v-4zM5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
           </svg>
         </button>
+      </div>
 
-        {/* Existing Share Button */}
+      {/* Right Actions: Share */}
+      <div className="absolute right-4 top-3 md:top-6 flex gap-2">
         <button
           onClick={handleShare}
           className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-neon-blue active:scale-95"

@@ -8,7 +8,7 @@ interface ShareModalProps {
 
 const ShareModal: React.FC<ShareModalProps> = ({ url, onClose }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div className="bg-[#1a1a2e] border border-white/10 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
         <button
           onClick={onClose}
