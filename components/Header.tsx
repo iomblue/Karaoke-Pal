@@ -1,6 +1,6 @@
-import React from 'react';
-
-import ShareModal from './ShareModal';
+import React, { Suspense } from 'react';
+// Lazy load to prevent main bundle crash if QR library has compatibility issues
+const ShareModal = React.lazy(() => import('./ShareModal'));
 
 const Header: React.FC = () => {
   const [showQRModal, setShowQRModal] = React.useState(false);
@@ -55,10 +55,12 @@ const Header: React.FC = () => {
       </div>
 
       {showQRModal && (
-        <ShareModal
-          url={window.location.href}
-          onClose={() => setShowQRModal(false)}
-        />
+        <Suspense fallback={null}>
+          <ShareModal
+            url={window.location.href}
+            onClose={() => setShowQRModal(false)}
+          />
+        </Suspense>
       )}
 
       <h1 className="text-2xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-pink via-purple-400 to-neon-blue tracking-tight drop-shadow-lg">
