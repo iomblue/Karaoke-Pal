@@ -1,5 +1,5 @@
 import React from 'react';
-import QRCode from 'react-qr-code';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface ShareModalProps {
   url: string;
@@ -10,7 +10,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ url, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div className="bg-[#1a1a2e] border border-white/10 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
           aria-label="Close"
@@ -26,11 +26,11 @@ const ShareModal: React.FC<ShareModalProps> = ({ url, onClose }) => {
         </div>
 
         <div className="flex justify-center mb-6 bg-white p-4 rounded-xl">
-          <QRCode 
-            value={url} 
+          <QRCodeSVG
+            value={url}
             size={200}
-            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            viewBox={`0 0 256 256`}
+            level="H"
+            includeMargin={false}
           />
         </div>
 
